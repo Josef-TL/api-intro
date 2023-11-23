@@ -1,4 +1,3 @@
-//This is the boilerplate code to write a simple web-server with the express.js framework
 const express = require('express')
 const fs = require('fs');
 const app = express()
@@ -10,15 +9,19 @@ function makeHTMLListFromJSONArray(data){
         list +="<li> "+ e.productName + "</li>"
     })
 
-  return list+"</ul>"
+    return list+"</ul>"
 }
 
-app.get('/',(req,res)=>{
-    res.send('')
-});
 
-app.get('/hello', (req, res) => {
-    res.send('Hello World!')
-})
+app.get('/products/material/unique',(req,res)=> {
+    const prodData = JSON.parse(fs.readFileSync("data.json"));
+    const materialList = [];
+    prodData.forEach((e)=>{
+        materialList.push(e.material);
+    })
+
+    res.send(materialList)
+
+});
 
 app.listen(port, () => {})
